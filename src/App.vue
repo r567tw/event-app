@@ -1,30 +1,53 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+const isLoggedIn = ref(false);
+
+const checkLogin = () => {
+  isLoggedIn.value = !!localStorage.getItem("token");
+};
+
+const logout = () => {
+  localStorage.removeItem("token");
+  isLoggedIn.value = false;
+  router.push("/login");
+};
+
+onMounted(checkLogin);
 </script>
 
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div id="app">
+    <nav>
+      <router-link to="/">活動清單</router-link>
+      <span v-if="isLoggedIn">
+        <router-link to="/create">新增活動</router-link>
+        <button @click="logout">登出</button>
+      </span>
+      <span v-else>
+        <router-link to="/login">登入</router-link>
+      </span>
+    </nav>
+    <router-view />
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+
+nav {
+  margin-bottom: 20px;
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+
+nav a {
+  margin: 0 10px;
 }
 </style>
