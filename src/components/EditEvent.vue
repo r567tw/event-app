@@ -121,6 +121,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { API_BASE_URL } from "../config";
 
 interface Event {
   id: number;
@@ -153,7 +154,7 @@ const fetchEvent = async () => {
     loading.value = true;
     error.value = "";
     const response = await fetch(
-      `https://project.r567tw.cc/api/events/${route.params.id}`
+      `${API_BASE_URL}/api/events/${route.params.id}`
     );
     if (response.ok) {
       const data = await response.json();
@@ -195,7 +196,7 @@ const updateEvent = async () => {
     };
 
     const response = await fetch(
-      `https://project.r567tw.cc/api/events/${route.params.id}`,
+      `${API_BASE_URL}/api/events/${route.params.id}`,
       {
         method: "PATCH",
         headers: {

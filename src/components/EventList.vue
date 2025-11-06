@@ -69,6 +69,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
+import { API_BASE_URL } from "../config";
 
 interface Event {
   id: number;
@@ -94,7 +95,7 @@ const formatDate = (dateString: string) => {
 const fetchEvents = async () => {
   try {
     loading.value = true;
-    const response = await fetch("https://project.r567tw.cc/api/events");
+    const response = await fetch(`${API_BASE_URL}/api/events`);
     if (response.ok) {
       const data = await response.json();
       events.value = data.data || data;

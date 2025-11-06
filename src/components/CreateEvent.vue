@@ -108,6 +108,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { API_BASE_URL } from "../config";
 
 const router = useRouter();
 const form = ref({
@@ -139,7 +140,7 @@ const createEvent = async () => {
       end_time: form.value.end_time.replace("T", " "),
     };
 
-    const response = await fetch("https://project.r567tw.cc/api/events", {
+    const response = await fetch(`${API_BASE_URL}/api/events`, {
       method: "POST",
       headers: {
         Accept: "application/json",

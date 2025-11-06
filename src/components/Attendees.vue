@@ -35,6 +35,11 @@
                   <p class="mt-2 text-muted">正在載入參加者...</p>
                 </div>
 
+                <div v-else-if="!isLoggedIn" class="text-center py-4">
+                  <i class="bi bi-shield-lock display-1 text-muted mb-3"></i>
+                  <h5 class="text-muted">請先登入以查看參加者名單</h5>
+                </div>
+
                 <div
                   v-else-if="attendees.length === 0"
                   class="text-center py-4"
@@ -85,9 +90,9 @@
           <div class="col-lg-4">
             <div class="card shadow">
               <div class="card-header bg-success text-white">
-                <h3 class="card-title h5 mb-0">
+                <h2 class="card-title h4 mb-0">
                   <i class="bi bi-person-plus me-2"></i>參加活動
-                </h3>
+                </h2>
               </div>
               <div class="card-body">
                 <form @submit.prevent="joinEvent">
@@ -207,6 +212,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
+import { API_BASE_URL } from "../config";
 
 interface Attendee {
   id: number;
@@ -229,13 +235,14 @@ const joinForm = ref({
   name: "",
   email: "",
 });
+const isLoggedIn = ref(!!localStorage.getItem("token"));
 
 const fetchAttendees = async () => {
   const token = localStorage.getItem("token");
   try {
     loading.value = true;
     const response = await fetch(
-      `https://project.r567tw.cc/api/events/${route.params.id}/attendees`,
+      `${API_BASE_URL}/api/events/${route.params.id}/attendees`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -254,11 +261,11 @@ const fetchAttendees = async () => {
 };
 
 const joinEvent = async () => {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    joinError.value = "請先登入";
-    return;
-  }
+  // const token = localStorage.getItem("token");
+  // if (!token) {
+  //   joinError.value = "請先登入";
+  //   return;
+  // }
 
   try {
     joining.value = true;
@@ -266,12 +273,12 @@ const joinEvent = async () => {
     joinSuccess.value = "";
 
     const response = await fetch(
-      `https://project.r567tw.cc/api/events/${route.params.id}/attendees`,
+      `${API_BASE_URL}/api/events/${route.params.id}/attendees`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          // Authorization: `Bearer ${token}`, // ignore auth
         },
         body: JSON.stringify(joinForm.value),
       }
@@ -311,7 +318,7 @@ const confirmDelete = async () => {
   try {
     deleting.value = true;
     const response = await fetch(
-      `https://project.r567tw.cc/api/events/${route.params.id}/attendees/${deleteModal.value.attendee.id}`,
+      `${API_BASE_URL}/api/events/${route.params.id}/attendees/${deleteModal.value.attendee.id}`,
       {
         method: "DELETE",
         headers: {

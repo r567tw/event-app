@@ -56,10 +56,15 @@
               <router-link
                 :to="`/events/${$route.params.id}/edit`"
                 class="btn btn-warning"
+                v-if="isLoggedIn"
               >
                 <i class="bi bi-pencil-square me-2"></i>編輯活動
               </router-link>
-              <button @click="showDeleteModal = true" class="btn btn-danger">
+              <button
+                v-if="isLoggedIn"
+                @click="showDeleteModal = true"
+                class="btn btn-danger"
+              >
                 <i class="bi bi-trash me-2"></i>刪除活動
               </button>
               <router-link
@@ -122,6 +127,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { API_BASE_URL } from "../config";
 
 interface Event {
   id: number;
@@ -136,6 +142,7 @@ const router = useRouter();
 const event = ref<Event | null>(null);
 const loading = ref(true);
 const showDeleteModal = ref(false);
+const isLoggedIn = ref(!!localStorage.getItem("token"));
 
 const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleString("zh-TW", {
@@ -151,7 +158,7 @@ const fetchEvent = async () => {
   try {
     loading.value = true;
     const response = await fetch(
-      `https://project.r567tw.cc/api/events/${route.params.id}`
+      `${API_BASE_URL}/api/events/${route.params.id}`
     );
     if (response.ok) {
       const data = await response.json();
@@ -176,7 +183,7 @@ const confirmDelete = async () => {
 
   try {
     const response = await fetch(
-      `https://project.r567tw.cc/api/events/${route.params.id}`,
+      `${API_BASE_URL}/api/events/${route.params.id}`,
       {
         method: "DELETE",
         headers: {

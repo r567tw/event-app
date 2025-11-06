@@ -31,10 +31,10 @@ onMounted(checkLogin);
         <router-link to="/" class="navbar-brand">活動管理系統</router-link>
 
         <div class="navbar-nav ms-auto">
+          <router-link to="/" class="nav-link d-inline-block"
+            >活動列表</router-link
+          >
           <span v-if="isLoggedIn">
-            <router-link to="/" class="nav-link d-inline-block"
-              >活動清單</router-link
-            >
             <router-link to="/create" class="nav-link d-inline-block"
               >新增活動</router-link
             >

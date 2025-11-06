@@ -49,6 +49,7 @@
 <script setup lang="ts">
 import { ref, inject } from "vue";
 import { useRouter } from "vue-router";
+import { API_BASE_URL } from "../config";
 
 const router = useRouter();
 const loginSuccess = inject<() => void>("loginSuccess");
@@ -60,7 +61,7 @@ const error = ref("");
 
 const login = async () => {
   try {
-    const response = await fetch("https://project.r567tw.cc/api/login", {
+    const response = await fetch(`${API_BASE_URL}/api/login`, {
       method: "POST",
       headers: {
         Accept: "application/json",

@@ -11,13 +11,11 @@ const routes = [
     path: "/",
     name: "EventList",
     component: EventList,
-    meta: { requiresAuth: true },
   },
   {
     path: "/events/:id",
     name: "EventDetail",
     component: EventDetail,
-    meta: { requiresAuth: true },
   },
   {
     path: "/create",
@@ -35,7 +33,6 @@ const routes = [
     path: "/events/:id/attendees",
     name: "Attendees",
     component: Attendees,
-    meta: { requiresAuth: true },
   },
   { path: "/login", name: "Login", component: Login },
 ];
