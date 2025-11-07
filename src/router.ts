@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import EventList from "./components/EventList.vue";
 import EventDetail from "./components/EventDetail.vue";
 import CreateEvent from "./components/CreateEvent.vue";
@@ -38,7 +38,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory("/event-app/"),
+  history: createWebHashHistory(),
   routes,
 });
 
