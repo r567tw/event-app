@@ -1,5 +1,103 @@
-# Vue 3 + TypeScript + Vite
+# 活動管理系統 (Event App)
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+一個基於 Vue 3 + TypeScript + Vite 開發的活動管理系統，提供活動的建立、編輯、查看及參與者管理功能。
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## 功能特色
+
+- 📋 **活動列表** - 瀏覽所有活動
+- 📝 **活動詳情** - 查看活動的詳細資訊
+- ➕ **新增活動** - 建立新的活動（需登入）
+- ✏️ **編輯活動** - 修改現有活動資訊（需登入）
+- 👥 **參與者管理** - 查看活動參與者名單
+- 🔐 **身份驗證** - 登入/登出功能
+
+## 技術堆疊
+
+- **前端框架**: Vue 3 (Composition API)
+- **開發語言**: TypeScript
+- **建置工具**: Vite
+- **路由管理**: Vue Router
+- **UI 框架**: Bootstrap 5
+- **圖示**: Bootstrap Icons
+
+## 開始使用
+
+### 環境需求
+
+- Node.js 16+
+- npm 或 yarn
+
+### 安裝
+
+```bash
+# 安裝相依套件
+npm install
+```
+
+### 開發
+
+```bash
+# 啟動開發伺服器
+npm run dev
+```
+
+開發伺服器預設運行在 `http://localhost:5173`
+
+### 建置
+
+```bash
+# 建置生產版本
+npm run build
+```
+
+### 預覽
+
+```bash
+# 預覽建置後的應用
+npm run preview
+```
+
+## 環境變數
+
+建立 `.env` 檔案來設定 API 位址：
+
+```
+VITE_API_BASE_URL=https://your-api-url.com
+```
+
+## 專案結構
+
+```
+event-app/
+├── public/          # 靜態資源
+├── src/
+│   ├── components/  # Vue 元件
+│   │   ├── Attendees.vue      # 參與者列表
+│   │   ├── CreateEvent.vue    # 新增活動
+│   │   ├── EditEvent.vue      # 編輯活動
+│   │   ├── EventDetail.vue    # 活動詳情
+│   │   ├── EventList.vue      # 活動列表
+│   │   └── Login.vue          # 登入頁面
+│   ├── assets/      # 資源檔案
+│   ├── App.vue      # 根元件
+│   ├── main.ts      # 應用程式入口
+│   ├── router.ts    # 路由設定
+│   ├── config.ts    # 設定檔
+│   └── style.css    # 全域樣式
+└── package.json
+```
+
+## 路由說明
+
+| 路徑                    | 元件        | 說明       | 權限   |
+| ----------------------- | ----------- | ---------- | ------ |
+| `/`                     | EventList   | 活動列表   | 公開   |
+| `/events/:id`           | EventDetail | 活動詳情   | 公開   |
+| `/create`               | CreateEvent | 新增活動   | 需登入 |
+| `/events/:id/edit`      | EditEvent   | 編輯活動   | 需登入 |
+| `/events/:id/attendees` | Attendees   | 參與者列表 | 公開   |
+| `/login`                | Login       | 登入頁面   | 公開   |
+
+## License
+
+MIT
